@@ -244,6 +244,40 @@ defmodule HandlerTest do
     """
   end
 
+  test "GET /bears/new" do
+    request = """
+    GET /bears/new HTTP/1.1\r
+    Host: example.com\r
+    User-Agent: ExampleBrowser/1.0\r
+    Accept: */*\r
+    \r
+    """
+
+    response = handle(request)
+
+    expected_response = """
+    HTTP/1.1 200 OK\r
+    Content-Type: text/html\r
+    Content-Length:232\r
+    \r
+    <form action="/bears" method="POST">
+      <p>
+        Name:<br/>
+        <input type="text" name="name">
+      </p>
+      <p>
+        Type:<br/>
+        <input type="text" name="type">
+      </p>
+      <p>
+        <input type="submit" value="Create Bear">
+      </p>
+    </form>
+    """
+
+    assert remove_whitespace(response) == remove_whitespace(expected_response)
+  end
+
   defp remove_whitespace(text) do
     String.replace(text, ~r{\s}, "")
   end
