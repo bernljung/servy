@@ -47,6 +47,11 @@ defmodule Servy.Handler do
     BearController.create(conv, conv.params)
   end
 
+  def route(%Conv{ method: "DELETE", path: "/bears/" <> id } = conv) do
+    params = Map.put(conv.params, "id", id)
+    BearController.delete(conv, params)
+  end
+
   def route(%Conv{ method: "GET", path: "/about" } = conv) do
     @pages_path
     |> Path.join("about.html")

@@ -27,6 +27,10 @@ defmodule Servy.BearController do
     render(conv, "show.eex", bear: bear)
   end
 
+  def delete(conv, %{"id" => _}) do
+    %{conv | status: 403, resp_body: "Deleting a bear is forbidden!"}
+  end
+
   def create(conv, %{"name" => name, "type" => type}) do
     %{conv | status: 201,
       resp_body: "Created a #{type} bear named #{name}!"}
